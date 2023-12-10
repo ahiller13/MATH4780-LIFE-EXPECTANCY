@@ -9,6 +9,7 @@ library(RCurl)
 library(tidyverse)
 library(GGally)
 library(dplyr)
+library(car)
 # Getting the url With my token
 url_w_token <- "https://raw.githubusercontent.com/ahiller13/MATH4780-LIFE-EXPECTANCY/main/LEDU.csv?token=GHSAT0AAAAAACLGJC4OLAMZY2OQP73GPKEAZLU5MVQ"
 
@@ -56,6 +57,39 @@ combined_data <- data.frame(Response= response_var_life_ex,regressors)
 
 full_model <- lm(Response ~ .,data=combined_data)
 summ_full_mode <- summary(full_model)
+## QQ Plot of R-Student Residuals Comparing Tn-p-1
+car::qqPlot(full_model, id = TRUE, col.lines = "red",reps=1000,ylab="Ordered R-Student Residuals",pch=16,cex=2)
+
+## Density Plot of R-Student Residuals
+rstud <- rstudent(full_model)
+hist(rstud,prob=TRUE,breaks=15, xlab= "R-Student Residuals",main = "R-Student residual Density Plot",ylim = c(0,max(density(rstud)$y) * 1.2),xlim = c(min(rstud), max(rstud)))
+lines(density(rstud,adjust=2), col="red",lwd=2,label = "R-Student Residuals")
+
+mu <- mean(rstud)
+sigma <- sd(rstud)
+x <- seq(min(rstud), max(rstud), length = 100)
+y <- dnorm(x, mean = mu, sd = sigma)
+lines(x, y, col = "blue", lwd = 2,label = "Normal Distribution")
+
+
+legend("topright", legend = c("R-Student Residuals", "Normal Distribution"), col = c("red", "blue"), lty = 1, lwd = 2)
+
+par(cex.axis = 1.2, cex.lab = 1.2, cex.main = 1.2, mar = c(5, 5, 4, 2) + 0.1)
+
+##Box-Cox
+summary(car::powerTransform(full_model,family = 'bcPower'))
+
+
+#lambda estimate 1.2442
+
+
+##################################################################
+##### Nicky Code: Lack of Fit ####################################
+##################################################################
+
+
+
+
 
 
 ## Decapritated
