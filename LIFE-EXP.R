@@ -1,10 +1,13 @@
-#R.home("bin")
-
+#in case you need to install these packages
+#install.packages("GGally")
+#install.packages("tidyverse")
+#install.packages("RCurl")
+#install.packages("ggplot2")
 # DECEMBER 9TH, 2023
 #libraries needed
 library(RCurl)
 library(tidyverse)
-
+library(GGally)
 # Getting the url With my token
 url_w_token <- "https://raw.githubusercontent.com/ahiller13/MATH4780-LIFE-EXPECTANCY/main/LEDU.csv?token=GHSAT0AAAAAACLGJC4OLAMZY2OQP73GPKEAZLU5MVQ"
 
@@ -28,8 +31,13 @@ ggplot(Life_expectancy,aes(x= as.factor(Economy_status_Developed),y= Life_expect
         axis.title.x = element_text(size=32),
         axis.title.y = element_text(size=32)
         )
-    
 
+
+# Scatter Plot Matrix
+response_var_life_ex <- Life_expectancy$Life_expectancy
+regressors <- Life_expectancy[, -which(names(Life_expectancy) == "Life_expectancy")]
+pairs(regressors)
+## Decapritated
 #################### ANDREW BIT ####################
 #just how I have the data set mapped in my files on my laptop
 #data <- read.csv("School/FALL23/MATH 4780/R sets/Life-Expectancy-Data-Updated.csv")
