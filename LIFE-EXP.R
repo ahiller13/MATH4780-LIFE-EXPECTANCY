@@ -8,6 +8,7 @@
 library(RCurl)
 library(tidyverse)
 library(GGally)
+library(dplyr)
 # Getting the url With my token
 url_w_token <- "https://raw.githubusercontent.com/ahiller13/MATH4780-LIFE-EXPECTANCY/main/LEDU.csv?token=GHSAT0AAAAAACLGJC4OLAMZY2OQP73GPKEAZLU5MVQ"
 
@@ -24,18 +25,25 @@ head(Life_expectancy)
 
 ggplot(Life_expectancy,aes(x= as.factor(Economy_status_Developed),y= Life_expectancy)) +
     stat_summary(fun = mean,geom = 'bar',fill = 'skyblue',position = 'dodge') +
-    labs(title = 'Bar Graph of mean Life Expectancy by Economy status (developed)',
+    labs(title = 'Life Expectancy by Economy status',
         x='Economy Status (developed)',
         y='Mean Life Expectancy') +
-        theme(plot.title = element_text(size=48,face='bold'),
-        axis.title.x = element_text(size=32),
-        axis.title.y = element_text(size=32)
+        theme(
+            plot.title = element_text(size=32,face='bold',margin= margin(b=20,t=20)),
+            axis.title.x = element_text(size=32, margin=margin(t=10)),
+            axis.title.y = element_text(size=32, margin=margin(r=10)),
+            plot.margin = unit(c(2,3,1,1),'cm')
         )
 
 
 # Scatter Plot Matrix
 response_var_life_ex <- Life_expectancy$Life_expectancy
 regressors <- Life_expectancy[, -which(names(Life_expectancy) == "Life_expectancy")]
+regressors <- regressors %>% mutate(Country = as.factor(Country))
+regressors <- regressors %>% mutate(Region = as.factor(Region))
+# checking mutation
+head(regressors)
+str(regressors)
 pairs(regressors)
 ## Decapritated
 #################### ANDREW BIT ####################
