@@ -36,7 +36,7 @@ ggplot(Life_expectancy,aes(x= as.factor(Economy_status_Developed),y= Life_expect
         )
 
 
-# Scatter Plot Matrix
+# Scatter Plot Matrix code
 response_var_life_ex <- Life_expectancy$Life_expectancy
 regressors <- Life_expectancy[, -which(names(Life_expectancy) == "Life_expectancy")]
 regressors <- regressors %>% mutate(Country = as.factor(Country))
@@ -44,7 +44,14 @@ regressors <- regressors %>% mutate(Region = as.factor(Region))
 # checking mutation
 head(regressors)
 str(regressors)
+## ScatterPlot_matrix
 pairs(regressors)
+
+
+##################################################################
+##### Nicky Code: for Symmetry and Normality #####################
+##################################################################
+
 ## Decapritated
 #################### ANDREW BIT ####################
 #just how I have the data set mapped in my files on my laptop
