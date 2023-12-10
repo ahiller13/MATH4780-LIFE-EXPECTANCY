@@ -47,10 +47,16 @@ str(regressors)
 ## ScatterPlot_matrix
 pairs(regressors)
 
+## For creating your model you might need the dataset below this
+combined_data <- data.frame(Response= response_var_life_ex,regressors)
 
 ##################################################################
 ##### Nicky Code: for Symmetry and Normality #####################
 ##################################################################
+
+full_model <- lm(Response ~ .,data=combined_data)
+summ_full_mode <- summary(full_model)
+
 
 ## Decapritated
 #################### ANDREW BIT ####################
