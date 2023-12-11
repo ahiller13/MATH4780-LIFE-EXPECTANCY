@@ -159,3 +159,4 @@ linM5 <- lm(Life_expectancy ~ + Under_five_deaths + Adult_mortality + Alcohol_co
 summary(linM5) ## R2 = 0.9787 
                ## Adj R2 = 0.9786
 vif(linM5)
+plot(linM5)
