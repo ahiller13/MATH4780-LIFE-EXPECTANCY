@@ -154,9 +154,32 @@ summary(linM4) ## R2 = 0.9774
 vif(linM4)
 
 
+##BEST MODEL?##
 linM5 <- lm(Life_expectancy ~ + Under_five_deaths + Adult_mortality + Alcohol_consumption + BMI + Incidents_HIV + GDP_per_capita + Thinness_five_nine_years + Schooling + Economy_status_Developed,
             data = dataLE) ## Remove 'Infant_deaths'
 summary(linM5) ## R2 = 0.9787 
                ## Adj R2 = 0.9786
 vif(linM5)
 plot(linM5)
+
+
+##################################
+############Andrew################
+####Residuals vs. Fitted Values###
+
+# Checking for Non-Constant Variance
+# Plotting residuals vs fitted values
+plot(linM5$fitted.values, linM5$residuals,
+     xlab = "Fitted Values", ylab = "Residuals",
+     main = "Residuals vs Fitted Values Plot",
+     pch = 16, col = "blue")
+
+# Add a horizontal line at y = 0 for reference
+abline(h = 0, col = "red", lty = 2)
+
+# Add a lowess smooth line to help identify patterns
+lines(lowess(linM5$fitted.values, linM5$residuals), col = "green")
+
+# Add a legend
+legend("topright", legend = c("Residuals", "y = 0", "Lowess Smooth"),
+       col = c("blue", "red", "green"), pch = c(16, 16, 16))
