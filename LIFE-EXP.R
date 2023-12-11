@@ -109,3 +109,53 @@ summary(car::powerTransform(full_model,family = 'bcPower'))
 #  labs(title = "Bar Graph of Mean Life Expectancy by Economy Status (Developed)",
 #       x = "Economy Status (Developed)",
 #       y = "Mean Life Expectancy")
+
+
+
+
+
+
+
+####################################################
+################# Ethan Code #######################
+################ Model Adequacy#####################
+
+dataLE <- read.csv("/Users/ethanbaierl/Downloads/Life-Expectancy-Data-Updated.csv")
+View(dataLE)
+
+install.packages("car")
+library(car)
+
+## Linear regression models
+linM1 <- lm(Life_expectancy ~ Infant_deaths + Under_five_deaths + Adult_mortality + Alcohol_consumption + Hepatitis_B + Measles + BMI + Polio + Diphtheria + Incidents_HIV + GDP_per_capita + Population_mln + Thinness_five_nine_years + Schooling + Economy_status_Developed,
+            data = dataLE)
+summary(linM1) ## R2 = 0.9792
+               ## Adj R2 = 0.9790 (Lower due to penalty imposed from adding more variables)
+
+
+# Remove non-significant variables from model 1
+linM2 <- lm(Life_expectancy ~ Infant_deaths + Under_five_deaths + Adult_mortality + Alcohol_consumption + Hepatitis_B + BMI + Incidents_HIV + GDP_per_capita + Thinness_five_nine_years + Schooling + Economy_status_Developed,
+            data = dataLE)
+summary(linM2) ## R2 = 0.9791
+               ## Adj R2 = 0.9791
+
+
+# Remove less significant variables from model 2
+linM3 <- lm(Life_expectancy ~ Infant_deaths + Under_five_deaths + Adult_mortality + Alcohol_consumption + BMI + Incidents_HIV + GDP_per_capita + Thinness_five_nine_years + Schooling + Economy_status_Developed,
+            data = dataLE)
+summary(linM3) ## R2 = 0.9791
+               ## Adj R2 = 0.979
+vif(linM3) ## Collinearity
+
+linM4 <- lm(Life_expectancy ~ Infant_deaths + Adult_mortality + Alcohol_consumption + BMI + Incidents_HIV + GDP_per_capita + Thinness_five_nine_years + Schooling + Economy_status_Developed,
+            data = dataLE)  ## Remove 'Under_five_deaths'
+summary(linM4) ## R2 = 0.9774
+               ## Adj R2 = 0.9773
+vif(linM4)
+
+
+linM5 <- lm(Life_expectancy ~ + Under_five_deaths + Adult_mortality + Alcohol_consumption + BMI + Incidents_HIV + GDP_per_capita + Thinness_five_nine_years + Schooling + Economy_status_Developed,
+            data = dataLE) ## Remove 'Infant_deaths'
+summary(linM5) ## R2 = 0.9787 
+               ## Adj R2 = 0.9786
+vif(linM5)
