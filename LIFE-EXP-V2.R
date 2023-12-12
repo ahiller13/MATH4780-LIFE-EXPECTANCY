@@ -20,19 +20,21 @@ regressors <- Life_expectancy[, -which(names(Life_expectancy) == "Life_expectanc
 regressors <- regressors %>% mutate(Country = as.factor(Country))
 regressors <- regressors %>% mutate(Region = as.factor(Region))
 
+exclude_vars <- c("Country","Region","Economy_status_Developed","Economy_status_Developing")
+
+
+
 ## For creating your model you might need the dataset below this
 combined_data <- data.frame(Response= response_var_life_ex,regressors)
 
-full_model <- 
+## this is to make the covariance matrix to get rid of collinearity
+regressors_for_cov <- regressors %>% select(-one_of(exclude_vars)) 
 
-
-
-
-
-
-
-
-
+X <- regressors_for_cov[,-1]
+Sig <- cor(X)
+C <- solve(Sig)
+VIF_scores=diag(C)
+print(VIF_scores)
 
 
 
@@ -44,11 +46,11 @@ model_5 <- lm(Response ~ Under_five_deaths + Adult_mortality + Alcohol_consumpti
 vif(model_5)
 summary_full_model <- summary(model_5)
 ## QQ Plot checking for normality
-car::qqPlot(model_5, id = TRUE, col.lines = "red",reps=1000,ylab="Ordered R-Student Residuals",main="QQ plot for model 5",pch=16,cex=2,cex.main=3,cex.lab = 3)
+car::qqPlot(model_5, id = TRUE, col.lines = "red",reps=1000,ylab="Ordered R-Student Residuals",main="QQ plot for our model",pch=16,cex=1.5,cex.main=3,cex.lab = 3)
 
 ## Density plot of R-student residuals
 rstud <- rstudent(model_5)
-hist(rstud,prob=TRUE,breaks=15, xlab= "R-Student Residuals",main = "R-Student residual Density Plot (model 5)",ylim = c(0,max(density(rstud)$y) * 1.2),xlim = c(min(rstud), max(rstud)))
+hist(rstud,prob=TRUE,breaks=15, xlab= "R-Student Residuals",main = "R-Student residual Density Plot (Original Model)",ylim = c(0,max(density(rstud)$y) * 1.2),xlim = c(min(rstud), max(rstud)))
 lines(density(rstud,adjust=2), col="red",lwd=2,label = "R-Student Residuals")
 
 mu <- mean(rstud)
