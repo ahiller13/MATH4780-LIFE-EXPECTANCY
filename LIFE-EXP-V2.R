@@ -98,3 +98,37 @@ car::spreadLevelPlot(model_5_w_log,smooth = FALSE,pch=16, col = "red", lwd = 3)
 ########################################
 #### LINEARITY LACK OF FIT #############
 #######################################
+
+response_var_life_ex <- Life_expectancy$Life_expectancy
+regressors <- Life_expectancy[, -which(names(Life_expectancy) == "Life_expectancy")]
+regressors <- regressors %>% mutate(Country = as.factor(Country))
+regressors <- regressors %>% mutate(Region = as.factor(Region))
+
+## For creating your model you might need the dataset below this
+combined_data <- data.frame(Response= response_var_life_ex,regressors)
+
+model_5_w_log <- lm(log(Response) ~ Under_five_deaths + Adult_mortality + Alcohol_consumption + BMI + Incidents_HIV + GDP_per_capita
+                    + Thinness_five_nine_years + Schooling + Economy_status_Developed, data = combined_data)
+
+car::crPlots(model_5_w_log, ylab = "partial residual", layout = c(3, 3), grid = FALSE, main =)
+
+
+#TRANSFORMATIONS to clean up Residuals plots
+# Adding a small constant (e.g., 0.001) to handle zero values
+combined_data$Alcohol_consumption_log_transformed <- log(combined_data$Alcohol_consumption + 0.001)
+
+# Example with square root transformation
+combined_data$Alcohol_sqrt <- sqrt(combined_data$Alcohol_consumption)
+combined_data$BMI_sqrt <- sqrt(combined_data$BMI)
+combined_data$HIV_sqrt <- sqrt(combined_data$Incidents_HIV)
+combined_data$GDP_per_capita_sqrt <- sqrt(combined_data$GDP_per_capita)
+combined_data$Thinness_sqrt <- sqrt(combined_data$Thinness_five_nine_years)
+combined_data$Schooling_sqrt <- sqrt(combined_data$Schooling)
+
+
+# Fit the linear model with the transformed variable
+model_5_w_log_transformed <- lm(log(Response) ~ Under_five_deaths + Adult_mortality + Alcohol_sqrt + BMI_sqrt + HIV_sqrt + GDP_per_capita_sqrt + Thinness_sqrt + Schooling_sqrt + Economy_status_Developed, data = combined_data)
+
+car::crPlots(model_5_w_log_transformed, ylab = "partial residual", layout = c(3, 3), grid = FALSE, main =)
+
+crPlots(model_5_w_log_transformed)
