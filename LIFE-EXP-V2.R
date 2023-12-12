@@ -23,6 +23,22 @@ regressors <- regressors %>% mutate(Region = as.factor(Region))
 ## For creating your model you might need the dataset below this
 combined_data <- data.frame(Response= response_var_life_ex,regressors)
 
+full_model <- 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ### MODEL 5 Model Adequacy
 model_5 <- lm(Response ~ Under_five_deaths + Adult_mortality + Alcohol_consumption + BMI + Incidents_HIV + GDP_per_capita + Thinness_five_nine_years + Schooling + Economy_status_Developed, data = combined_data)
 vif(model_5)
