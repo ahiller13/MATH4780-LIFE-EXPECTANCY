@@ -70,3 +70,13 @@ lines(x, y, col = "blue", lwd = 2,label = "Normal Distribution")
 legend("topright", legend = c("R-Student Residuals", "Normal Distribution"), col = c("red", "blue"), lty = 1, lwd = 2)
 
 par(cex.axis = 1.2, cex.lab = 1.2, cex.main = 1.2, mar = c(5, 5, 4, 2) + 0.1)
+
+#########################################
+#### NON-CONSTANT VARIANCE ##############
+#########################################
+car::spreadLevelPlot(model_5,smooth = FALSE,pch=16, col = "red", lwd = 3)
+car::spreadLevelPlot(model_5_w_log,smooth = FALSE,pch=16, col = "red", lwd = 3)
+
+########################################
+#### LINEARITY LACK OF FIT #############
+#######################################
