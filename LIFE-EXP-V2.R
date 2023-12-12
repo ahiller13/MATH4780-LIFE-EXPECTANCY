@@ -104,7 +104,7 @@ regressors <- Life_expectancy[, -which(names(Life_expectancy) == "Life_expectanc
 regressors <- regressors %>% mutate(Country = as.factor(Country))
 regressors <- regressors %>% mutate(Region = as.factor(Region))
 
-## For creating your model you might need the dataset below this
+#combined_data for Response
 combined_data <- data.frame(Response= response_var_life_ex,regressors)
 
 model_5_w_log <- lm(log(Response) ~ Under_five_deaths + Adult_mortality + Alcohol_consumption + BMI + Incidents_HIV + GDP_per_capita
@@ -114,10 +114,7 @@ car::crPlots(model_5_w_log, ylab = "partial residual", layout = c(3, 3), grid = 
 
 
 #TRANSFORMATIONS to clean up Residuals plots
-# Adding a small constant (e.g., 0.001) to handle zero values
-combined_data$Alcohol_consumption_log_transformed <- log(combined_data$Alcohol_consumption + 0.001)
-
-# Example with square root transformation
+#sqrt transformations
 combined_data$Alcohol_sqrt <- sqrt(combined_data$Alcohol_consumption)
 combined_data$BMI_sqrt <- sqrt(combined_data$BMI)
 combined_data$HIV_sqrt <- sqrt(combined_data$Incidents_HIV)
