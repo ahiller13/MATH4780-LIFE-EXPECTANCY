@@ -71,7 +71,7 @@ summary(car::powerTransform(model_5, family = "bcPower"))
 
 model_5_w_log <- lm(log(Response) ~ Under_five_deaths + Adult_mortality + Alcohol_consumption + BMI + Incidents_HIV + GDP_per_capita + Thinness_five_nine_years + Schooling + Economy_status_Developed, data = combined_data)
 
-car::qqPlot(model_5_w_log, id = TRUE, col.lines = "red",reps=1000,ylab="Ordered R-Student Residuals",main="QQ plot for model 5 with Log",pch=16,cex=2,cex.main=3,cex.lab = 3)
+car::qqPlot(model_5_w_log, id = TRUE, col.lines = "red",reps=1000,ylab="Ordered R-Student Residuals",main="QQ plot for model with Log transformation",pch=16,cex=2,cex.main=3,cex.lab = 3)
 coef(model_5_w_log)
 
 ## Density plot of R-student residuals
