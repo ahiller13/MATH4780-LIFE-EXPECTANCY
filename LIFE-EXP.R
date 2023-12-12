@@ -24,6 +24,8 @@ Life_expectancy <- read.csv(text = dataset)
 # Checking format
 head(Life_expectancy)
 
+
+### PLOT OF DEVELOPED VS NON DEVELOPED AND THE LIFE EXPECTANCY
 ggplot(Life_expectancy,aes(x= as.factor(Economy_status_Developed),y= Life_expectancy)) +
     stat_summary(fun = mean,geom = 'bar',fill = 'skyblue',position = 'dodge') +
     labs(title = 'Life Expectancy by Economy status',
