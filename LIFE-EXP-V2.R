@@ -8,7 +8,7 @@ library(car)
 url_w_token <- "https://raw.githubusercontent.com/ahiller13/MATH4780-LIFE-EXPECTANCY/main/LEDU.csv?token=GHSAT0AAAAAACLGJC4OLAMZY2OQP73GPKEAZLU5MVQ"
 
 # nicky token
-headers <- c('Authorization' = paste('Bearer','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'))
+headers <- c('Authorization' = paste('Bearer',''))
 
 dataset <- getURL(url_w_token,httpheader = headers)
 #print(dataset)
